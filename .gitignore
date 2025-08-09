@@ -1,0 +1,36 @@
+# 数据目录
+data/
+
+# 日志文件
+*.log
+
+# 环境变量文件
+.env
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 构建产物
+zmirror
+zmirror.exe
+dist/
+
+# Go 相关
+vendor/
+*.prof
+coverage.out
+
+# Docker 相关
+.docker/
+dist/
