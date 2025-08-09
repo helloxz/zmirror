@@ -34,3 +34,9 @@ coverage.out
 # Docker 相关
 .docker/
 dist/
+
+# 前端相关
+frontend/node_modules/*
+web-new/node_modules/
+web-new/dist/
+web-new/.vite/

@@ -11,7 +11,7 @@ type User struct {
 	ID        uint      `gorm:"primaryKey" json:"id"`
 	Username  string    `gorm:"uniqueIndex;not null" json:"username"`
 	Password  string    `gorm:"not null" json:"password"`
-	IsAdmin   bool      `gorm:"default:false" json:"is_admin"`
+	IsAdmin   bool      `gorm:"default:false" json:"is_admin"` // 注意：管理员用户存储在配置文件中，数据库中只存储普通用户
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

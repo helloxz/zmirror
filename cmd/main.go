@@ -11,6 +11,8 @@ import (
 	"zmirror/internal/model"
 	"zmirror/internal/service"
 
+	"zmirror/controller"
+
 	"github.com/gin-gonic/gin"
 	"github.com/glebarez/sqlite"
 	"github.com/spf13/viper"
@@ -72,10 +74,9 @@ func main() {
 	router.Use(middleware.CacheHeadersMiddleware())
 
 	// 静态文件服务
-	router.Static("/static", "./web")
-	router.GET("/", func(c *gin.Context) {
-		c.Redirect(302, "/static/index.html")
-	})
+	router.LoadHTMLGlob("static/html/*")
+	router.Static("/assets", "./static/assets")
+	router.GET("/", controller.Home)
 
 	// Docker Registry API路由 - 使用NoRoute处理
 	// 使用NoRoute处理所有v2请求，包括/v2/

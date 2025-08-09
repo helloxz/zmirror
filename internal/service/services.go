@@ -114,7 +114,7 @@ func (s *UserService) HashPassword(password string) string {
 
 // AuthenticateUser 验证用户
 func (s *UserService) AuthenticateUser(username, password string) (*model.User, error) {
-	// 首先检查是否是管理员用户
+	// 首先检查是否是管理员用户（从配置文件）
 	if username == s.adminUser && password == s.adminPass {
 		return &model.User{
 			Username: username,
@@ -122,32 +122,35 @@ func (s *UserService) AuthenticateUser(username, password string) (*model.User, 
 		}, nil
 	}
 
-	// 从数据库查找普通用户
+	// 从数据库查找普通用户（只查找非管理员用户）
 	var user model.User
 	hashedPassword := s.HashPassword(password)
-	err := s.db.Where("username = ? AND password = ? AND is_admin = ?", username, hashedPassword, false).First(&user).Error
+	err := s.db.Where("username = ? AND password = ?", username, hashedPassword).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
-// GetAllUsers 获取所有普通用户
+// GetAllUsers 获取所有普通用户（不包括管理员）
 func (s *UserService) GetAllUsers() ([]model.User, error) {
 	var users []model.User
-	err := s.db.Where("is_admin = ?", false).Find(&users).Error
+	// 普通用户在数据库中，管理员在配置文件中，所以只查询数据库
+	err := s.db.Find(&users).Error
 	return users, err
 }
 
-// CreateUser 创建用户
+// CreateUser 创建普通用户
 func (s *UserService) CreateUser(user *model.User) error {
 	user.Password = s.HashPassword(user.Password)
+	user.IsAdmin = false // 确保创建的是普通用户
 	return s.db.Create(user).Error
 }
 
-// DeleteUser 删除用户
+// DeleteUser 删除普通用户
 func (s *UserService) DeleteUser(id uint) error {
-	return s.db.Where("is_admin = ?", false).Delete(&model.User{}, id).Error
+	// 只删除普通用户，不能删除管理员（管理员在配置文件中）
+	return s.db.Delete(&model.User{}, id).Error
 }
 
 type ProxyService struct {
