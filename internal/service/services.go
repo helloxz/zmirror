@@ -208,21 +208,31 @@ func (s *ProxyService) ProxyRequest(method, path string, headers http.Header) (*
 					newResp, err := s.makeRequest(method, targetURL, headers, token)
 					if err == nil {
 						fmt.Printf("PROXY DEBUG: Second request successful: %d\n", newResp.StatusCode)
-						return newResp, registry.URL, nil
+						// 只有成功才返回，否则继续尝试下一个镜像源
+						if newResp.StatusCode >= 200 && newResp.StatusCode < 300 {
+							return newResp, registry.URL, nil
+						}
+						newResp.Body.Close()
 					} else {
 						fmt.Printf("PROXY DEBUG: Second request failed: %v\n", err)
 					}
 				} else {
 					fmt.Printf("PROXY DEBUG: Failed to get token: %v\n", err)
 				}
+			} else {
+				resp.Body.Close()
 			}
+			continue // 401认证失败，尝试下一个镜像源
 		}
 
-		// 如果成功或者是明确的错误（而不是网络错误），返回结果
-		if resp.StatusCode < 500 {
+		// 如果成功（2xx状态码），返回结果
+		if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 			return resp, registry.URL, nil
 		}
+
+		// 其他状态码（包括404），关闭响应体并尝试下一个镜像源
 		resp.Body.Close()
+		fmt.Printf("PROXY DEBUG: Registry %s returned %d, trying next registry\n", registry.URL, resp.StatusCode)
 	}
 
 	return nil, "", fmt.Errorf("all registries failed")
@@ -364,8 +374,43 @@ func NewLogService(db *gorm.DB) *LogService {
 	return &LogService{db: db}
 }
 
+// shouldLogRequest 判断是否应该记录该请求的日志
+func (s *LogService) shouldLogRequest(method, path string) bool {
+	// 1. 所有HEAD请求都不记录
+	if method == "HEAD" {
+		return false
+	}
+
+	// 2. 路径包含"blobs"的不记录
+	if strings.Contains(path, "blobs") {
+		return false
+	}
+
+	// 3. 路径等于"/v2/"的不记录
+	if path == "/v2/" {
+		return false
+	}
+
+	// 4. 只记录GET请求且路径包含"manifests"的，但排除带有sha256的请求
+	if method == "GET" && strings.Contains(path, "manifests") {
+		// 如果路径包含sha256，不记录
+		if strings.Contains(path, "sha256:") {
+			return false
+		}
+		return true
+	}
+
+	// 其他情况都不记录
+	return false
+}
+
 // LogAccess 记录访问日志
 func (s *LogService) LogAccess(log *model.AccessLog) {
+	// 检查是否应该记录该请求
+	if !s.shouldLogRequest(log.Method, log.Path) {
+		return
+	}
+
 	// 异步记录日志，不影响主要业务流程
 	go func() {
 		s.db.Create(log)
