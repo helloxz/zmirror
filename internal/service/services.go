@@ -423,3 +423,8 @@ func (s *LogService) GetAccessLogs(limit int) ([]model.AccessLog, error) {
 	err := s.db.Order("created_at DESC").Limit(limit).Find(&logs).Error
 	return logs, err
 }
+
+// ClearAccessLogs 清空访问日志
+func (s *LogService) ClearAccessLogs() error {
+	return s.db.Where("1 = 1").Delete(&model.AccessLog{}).Error
+}

@@ -254,3 +254,12 @@ func (h *AdminHandler) GetAccessLogs(c *gin.Context) {
 	}
 	c.JSON(200, logs)
 }
+
+func (h *AdminHandler) ClearAccessLogs(c *gin.Context) {
+	err := h.logService.ClearAccessLogs()
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"message": "access logs cleared successfully"})
+}

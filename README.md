@@ -232,6 +232,7 @@ server {
 
 #### 访问日志
 - `GET /api/logs` - 获取访问日志
+- `DELETE /api/logs` - 清空访问日志
 
 ## 开发说明
 

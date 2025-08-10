@@ -23,63 +23,11 @@
       </div>
       
       <div class="card-body">
-        <!-- 筛选器 -->
-        <div class="filter-container">
-          <el-row :gutter="16">
-            <el-col :span="6">
-              <el-select
-                v-model="filters.method"
-                placeholder="请求方法"
-                clearable
-                style="width: 100%"
-                @change="handleFilterChange"
-              >
-                <el-option label="GET" value="GET" />
-                <el-option label="POST" value="POST" />
-                <el-option label="PUT" value="PUT" />
-                <el-option label="DELETE" value="DELETE" />
-                <el-option label="HEAD" value="HEAD" />
-              </el-select>
-            </el-col>
-            <el-col :span="6">
-              <el-select
-                v-model="filters.status"
-                placeholder="状态码"
-                clearable
-                style="width: 100%"
-                @change="handleFilterChange"
-              >
-                <el-option label="200 - 成功" value="200" />
-                <el-option label="401 - 未授权" value="401" />
-                <el-option label="403 - 禁止访问" value="403" />
-                <el-option label="404 - 未找到" value="404" />
-                <el-option label="500 - 服务器错误" value="500" />
-              </el-select>
-            </el-col>
-            <el-col :span="6">
-              <el-input
-                v-model="filters.username"
-                placeholder="用户名"
-                clearable
-                @keyup.enter="handleFilterChange"
-              />
-            </el-col>
-            <el-col :span="6">
-              <el-input
-                v-model="filters.clientIp"
-                placeholder="客户端IP"
-                clearable
-                @keyup.enter="handleFilterChange"
-              />
-            </el-col>
-          </el-row>
-        </div>
-
         <!-- 表格 -->
         <div class="table-container">
           <el-table
             v-loading="loading"
-            :data="filteredLogs"
+            :data="paginatedLogs"
             stripe
             style="width: 100%"
             max-height="600"
@@ -162,48 +110,17 @@ import axios from 'axios'
 const loading = ref(false)
 const logs = ref([])
 
-// 筛选器
-const filters = reactive({
-  method: '',
-  status: '',
-  username: '',
-  clientIp: ''
-})
-
 // 分页
 const pagination = reactive({
   page: 1,
   size: 100
 })
 
-// 计算属性 - 筛选后的日志
-const filteredLogs = computed(() => {
-  let result = logs.value
-
-  if (filters.method) {
-    result = result.filter(log => log.method === filters.method)
-  }
-  
-  if (filters.status) {
-    result = result.filter(log => log.status_code.toString() === filters.status)
-  }
-  
-  if (filters.username) {
-    result = result.filter(log => 
-      log.username && log.username.toLowerCase().includes(filters.username.toLowerCase())
-    )
-  }
-  
-  if (filters.clientIp) {
-    result = result.filter(log => 
-      log.client_ip && log.client_ip.includes(filters.clientIp)
-    )
-  }
-
-  // 分页
+// 计算属性 - 分页后的日志
+const paginatedLogs = computed(() => {
   const start = (pagination.page - 1) * pagination.size
   const end = start + pagination.size
-  return result.slice(start, end)
+  return logs.value.slice(start, end)
 })
 
 // 方法
@@ -221,10 +138,6 @@ const loadData = async () => {
   } finally {
     loading.value = false
   }
-}
-
-const handleFilterChange = () => {
-  pagination.page = 1  // 重置到第一页
 }
 
 const handlePageChange = (page) => {
@@ -289,12 +202,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.filter-container {
-  margin-bottom: 16px;
-  padding: 16px;
-  background: #f8f9fa;
-  border-radius: 8px;
-}
 
 .el-table .el-tag {
   font-family: monospace;
