@@ -23,7 +23,7 @@ jobs:
 
       - name: Build the Go application
         run: |
-          go build -o bin/zmirror -ldflags ./cmd/main.go
+          go build -o bin/zmirror -ldflags="-s -w" ./cmd/main.go
           upx -9 bin/zmirror
 
       - name: Set up Docker Buildx
