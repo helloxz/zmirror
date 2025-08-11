@@ -3,7 +3,7 @@
     <!-- 页面头部 -->
     <div class="page-header">
       <h2 class="page-title">仪表板</h2>
-      <p class="page-description">Docker镜像代理管理系统概览</p>
+      <p class="page-description">Docker镜像代理系统</p>
     </div>
 
     <!-- 导航卡片 -->
@@ -16,7 +16,7 @@
             </div>
             <div class="nav-card-info">
               <h3>镜像源管理</h3>
-              <p>管理上游Docker镜像源</p>
+              <p>上游Docker镜像源</p>
             </div>
           </div>
         </el-card>
@@ -44,7 +44,7 @@
             </div>
             <div class="nav-card-info">
               <h3>用户管理</h3>
-              <p>管理系统用户账户</p>
+              <p>管理系统用户</p>
             </div>
           </div>
         </el-card>

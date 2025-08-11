@@ -7,7 +7,7 @@
         <div class="header-content">
           <div>
             <h1 class="header-title">Zmirror</h1>
-            <p class="header-subtitle">Docker镜像代理管理系统</p>
+            <p class="header-subtitle">Docker镜像代理系统</p>
           </div>
           <div class="header-actions">
             <div class="user-info">

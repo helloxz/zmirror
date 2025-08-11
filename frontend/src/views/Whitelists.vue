@@ -6,6 +6,19 @@
       <p class="page-description">配置允许访问的镜像前缀白名单</p>
     </div>
 
+    <!-- 白名单说明 -->
+    <div class="permission-info">
+      <div class="info-header">
+        <span class="info-title">白名单说明</span>
+      </div>
+      <div class="info-content">
+        <div class="permission-item">
+          <span class="permission-type">注意：</span>
+          <span class="permission-desc">白名单内的镜像可以匿名拉取，非白名单镜像必须使用docker login登录后才能拉取。</span>
+        </div>
+      </div>
+    </div>
+
     <!-- 内容卡片 -->
     <div class="content-card">
       <div class="card-header">
@@ -211,5 +224,56 @@ onMounted(() => {
 <style scoped>
 .el-tag {
   font-family: monospace;
+}
+
+.permission-info {
+  background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+  border: 1px solid #e3f2fd;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.permission-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.info-header {
+  margin-bottom: 16px;
+}
+
+.info-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.permission-item {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5f6368;
+}
+
+.permission-type {
+  font-weight: 600;
+}
+
+.permission-desc {
+  margin-left: 4px;
 }
 </style>

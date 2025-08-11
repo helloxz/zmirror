@@ -7,7 +7,7 @@
           <h1 class="hero-title">
             <span class="gradient-text">ZMirror</span>
           </h1>
-          <h2 class="hero-subtitle">Docker镜像代理管理系统</h2>
+          <h2 class="hero-subtitle">Docker镜像代理系统</h2>
           <p class="hero-description">
             一个简单易用的Docker镜像代理管理系统，支持多镜像源配置、白名单管理和访问控制。
             帮助企业和个人更好地管理Docker镜像拉取，提高开发效率。
@@ -19,6 +19,7 @@
               size="large" 
               @click="handleMainAction"
               :icon="authStore.isLoggedIn ? Monitor : Lock"
+              class="custom-primary-btn"
             >
               {{ authStore.isLoggedIn ? '管理后台' : '立即登录' }}
             </el-button>
@@ -26,7 +27,7 @@
             <el-button 
               size="large" 
               @click="openGithub"
-              
+              class="custom-secondary-btn"
             >
               <el-icon style="margin-right: 6px;"><Star /></el-icon>
               GitHub
@@ -36,7 +37,15 @@
         
         <div class="hero-image">
           <div class="docker-icon">
-            <svg t="1754723796933" class="icon" viewBox="0 0 1423 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6390" width="200" height="200"><path d="M285.924091 824.783652c-40.580953 0-77.378948-33.238872-77.378948-73.54594s33.238872-73.730847 77.423437-73.730847c44.362522 0 77.734861 33.238872 77.734861 73.684968s-36.886973 73.54594-77.77935 73.641869z m949.952168-401.222992c-8.009417-58.868728-44.495989-106.791763-92.55249-143.589758l-18.688176-14.81763-15.084565 18.376753c-29.322446 33.238872-40.936866 92.152089-37.376352 136.158698 3.559123 33.32785 14.239272 66.433255 32.88296 92.196579-15.084564 7.697994-33.683762 14.81763-48.056502 22.383547-33.817229 11.079161-66.700189 14.81763-99.672127 14.81763H5.686255l-3.560513 21.934485c-7.119636 70.125845 3.560513 143.588368 33.325069 210.023013l14.458937 25.807813v3.559123c88.991977 147.326837 247.399365 213.582136 419.911169 213.582136 331.89795 0 604.077709-143.589758 733.120942-452.838618 84.543074 3.69259 169.931439-18.376753 210.023013-99.449681l10.68293-18.376753-17.795615-11.079161c-48.056502-29.322446-113.910009-33.238872-169.086147-18.376753z m-475.087306-58.868728h-144.033258v143.589758h144.172286V364.602954z m0-180.521221h-144.033258v143.589759h144.172286V184.348668z m0-184.170711h-144.033258v143.589758h144.172286V0.004171z m176.204393 364.691932H793.7595v143.589758h143.589758V364.602954z m-533.868447 0h-143.143478v143.589758h143.678736V364.602954z m179.763516 0H440.504032v143.589758h143.232455V364.602954z m-357.750252 0H82.976225v143.589758h144.033259V364.602954zM582.891195 184.170711H440.504032v143.589759h143.232455V184.348668z m-180.654687 0H260.203866v143.589759H403.348734V184.348668z" fill="#1488C6" p-id="6391"></path></svg>
+            <svg t="1754723796933" class="icon" viewBox="0 0 1423 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6390" width="200" height="200">
+              <defs>
+                <linearGradient id="dockerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a8edea;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#fed6e3;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <path d="M285.924091 824.783652c-40.580953 0-77.378948-33.238872-77.378948-73.54594s33.238872-73.730847 77.423437-73.730847c44.362522 0 77.734861 33.238872 77.734861 73.684968s-36.886973 73.54594-77.77935 73.641869z m949.952168-401.222992c-8.009417-58.868728-44.495989-106.791763-92.55249-143.589758l-18.688176-14.81763-15.084565 18.376753c-29.322446 33.238872-40.936866 92.152089-37.376352 136.158698 3.559123 33.32785 14.239272 66.433255 32.88296 92.196579-15.084564 7.697994-33.683762 14.81763-48.056502 22.383547-33.817229 11.079161-66.700189 14.81763-99.672127 14.81763H5.686255l-3.560513 21.934485c-7.119636 70.125845 3.560513 143.588368 33.325069 210.023013l14.458937 25.807813v3.559123c88.991977 147.326837 247.399365 213.582136 419.911169 213.582136 331.89795 0 604.077709-143.589758 733.120942-452.838618 84.543074 3.69259 169.931439-18.376753 210.023013-99.449681l10.68293-18.376753-17.795615-11.079161c-48.056502-29.322446-113.910009-33.238872-169.086147-18.376753z m-475.087306-58.868728h-144.033258v143.589758h144.172286V364.602954z m0-180.521221h-144.033258v143.589759h144.172286V184.348668z m0-184.170711h-144.033258v143.589758h144.172286V0.004171z m176.204393 364.691932H793.7595v143.589758h143.589758V364.602954z m-533.868447 0h-143.143478v143.589758h143.678736V364.602954z m179.763516 0H440.504032v143.589758h143.232455V364.602954z m-357.750252 0H82.976225v143.589758h144.033259V364.602954zM582.891195 184.170711H440.504032v143.589759h143.232455V184.348668z m-180.654687 0H260.203866v143.589759H403.348734V184.348668z" fill="url(#dockerGradient)" p-id="6391"></path>
+            </svg>
           </div>
         </div>
       </div>
@@ -129,13 +138,13 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
-        <p>&copy; 2024 ZMirror. 开源项目，欢迎贡献代码。</p>
-        <div class="footer-links">
+        <p>&copy; 2025 Powered by ZMirror.</p>
+        <!-- <div class="footer-links">
           <el-button text @click="openGithub">
             <el-icon><Star /></el-icon>
             GitHub
           </el-button>
-        </div>
+        </div> -->
       </div>
     </footer>
   </div>
@@ -235,6 +244,52 @@ const openGithub = () => {
   flex-wrap: wrap;
 }
 
+/* 自定义按钮样式 */
+.custom-primary-btn {
+  background: linear-gradient(45deg, #a8edea, #fed6e3) !important;
+  border: none !important;
+  color: #2c3e50 !important;
+  font-weight: 600 !important;
+  padding: 16px 32px !important;
+  border-radius: 50px !important;
+  box-shadow: 0 8px 25px rgba(168, 237, 234, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.custom-primary-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(168, 237, 234, 0.4) !important;
+  background: linear-gradient(45deg, #fed6e3, #a8edea) !important;
+}
+
+.custom-primary-btn:active {
+  transform: translateY(0) !important;
+}
+
+.custom-secondary-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 14px 30px !important;
+  border-radius: 50px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.custom-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2) !important;
+}
+
+.custom-secondary-btn:active {
+  transform: translateY(0) !important;
+}
+
 .hero-image {
   display: flex;
   justify-content: center;
@@ -243,12 +298,38 @@ const openGithub = () => {
 
 .docker-icon {
   animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 15px 35px rgba(168, 237, 234, 0.3));
+  position: relative;
+}
+
+.docker-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(168, 237, 234, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  animation: pulse 4s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 /* Features Section */
@@ -392,7 +473,7 @@ const openGithub = () => {
 
 .footer .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -454,6 +535,14 @@ const openGithub = () => {
   .hero-section {
     padding: 0 16px;
   }
+
+  .custom-primary-btn {
+    padding: 14px 28px !important;
+  }
+
+  .custom-secondary-btn {
+    padding: 12px 24px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -475,6 +564,21 @@ const openGithub = () => {
   
   .code-example {
     padding: 20px;
+  }
+
+  .custom-primary-btn {
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+  }
+
+  .custom-secondary-btn {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+
+  .docker-icon::before {
+    width: 200px;
+    height: 200px;
   }
 }
 </style>

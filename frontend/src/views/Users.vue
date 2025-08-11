@@ -6,6 +6,28 @@
       <p class="page-description">管理系统用户账户和权限</p>
     </div>
 
+    <!-- 用户权限说明 -->
+    <div class="permission-info">
+      <div class="info-header">
+        <span class="info-title">用户权限说明</span>
+      </div>
+      <div class="info-content">
+        <div class="permission-item">
+          <span class="permission-type">管理员用户：</span>
+          <span class="permission-desc">可以登录WEB管理界面，但无法进行docker login登录。</span>
+        </div>
+        <div class="permission-item">
+          <span class="permission-type">普通用户：</span>
+          <span class="permission-desc">可通过docker login登录并拉取镜像，但无法登录WEB管理界面。</span>
+        </div>
+
+        <div class="permission-item">
+          <span class="permission-type">备注：</span>
+          <span class="permission-desc">此处创建的用户为普通用户！</span>
+        </div>
+      </div>
+    </div>
+
     <!-- 内容卡片 -->
     <div class="content-card">
       <div class="card-header">
@@ -346,3 +368,61 @@ onMounted(() => {
   loadData()
 })
 </script>
+
+<style scoped>
+.permission-info {
+  background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+  border: 1px solid #e3f2fd;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.permission-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.info-header {
+  margin-bottom: 16px;
+}
+
+.info-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.permission-item {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5f6368;
+  /* background: rgba(255, 255, 255, 0.6);
+  padding: 10px 16px;
+  border-radius: 6px;
+  border-left: 3px solid #e3f2fd; */
+}
+
+.permission-type {
+  font-weight: 600;
+  /* color: #1976d2; */
+}
+
+.permission-desc {
+  margin-left: 4px;
+}
+</style>

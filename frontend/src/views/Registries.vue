@@ -4,6 +4,24 @@
     <div class="page-header">
       <h2 class="page-title">镜像源管理</h2>
       <p class="page-description">管理上游Docker镜像源配置</p>
+      
+    </div>
+
+    <!-- 镜像源配置说明 -->
+    <div class="permission-info">
+      <div class="info-header">
+        <span class="info-title">镜像源配置说明</span>
+      </div>
+      <div class="info-content">
+        <div class="permission-item">
+          <span class="permission-type">优先级规则：</span>
+          <span class="permission-desc">数字越小，优先级越高。</span>
+        </div>
+        <div class="permission-item">
+          <span class="permission-type">查找机制：</span>
+          <span class="permission-desc">可添加多个镜像源，Zmirror将根据优先级依次查找镜像，知道匹配为止！</span>
+        </div>
+      </div>
     </div>
 
     <!-- 内容卡片 -->
@@ -224,3 +242,56 @@ onMounted(() => {
   loadData()
 })
 </script>
+
+<style scoped>
+.permission-info {
+  background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+  border: 1px solid #e3f2fd;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.permission-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.info-header {
+  margin-bottom: 16px;
+}
+
+.info-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.permission-item {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5f6368;
+}
+
+.permission-type {
+  font-weight: 600;
+}
+
+.permission-desc {
+  margin-left: 4px;
+}
+</style>
