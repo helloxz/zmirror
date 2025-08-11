@@ -1,0 +1,10 @@
+version: '3'
+services:
+    zmirror:
+        container_name: zmirror
+        volumes:
+            - '/opt/zmirror/data:/opt/zmirror/data'
+        ports:
+            - '5080:5080'
+        restart: always
+        image: 'helloz/zmirror'
