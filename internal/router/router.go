@@ -107,5 +107,8 @@ func setupAdminRoutes(router *gin.Engine, adminHandler *handler.AdminHandler, us
 		// 访问日志
 		api.GET("/logs", adminHandler.GetAccessLogs)
 		api.DELETE("/logs", adminHandler.ClearAccessLogs)
+
+		// 系统信息
+		api.GET("/version", adminHandler.GetVersion)
 	}
 }

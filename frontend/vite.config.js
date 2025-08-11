@@ -26,6 +26,20 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../static'
+    outDir: '../static',
+    rollupOptions: {
+      output: {
+        entryFileNames: (chunkInfo) => {
+          return chunkInfo.name === 'index' ? 'assets/index.js' : 'assets/[name]-[hash].js'
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'index.css') {
+            return 'assets/index.css'
+          }
+          return 'assets/[name]-[hash].[ext]'
+        }
+      }
+    }
   }
 })

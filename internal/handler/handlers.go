@@ -11,6 +11,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const VERSION = "0.1.0"
+const DATE_VERSION = "20250811"
+
 type RegistryHandler struct {
 	proxyService    *service.ProxyService
 	registryService *service.RegistryService
@@ -262,4 +265,14 @@ func (h *AdminHandler) ClearAccessLogs(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"message": "access logs cleared successfully"})
+}
+
+// 系统信息
+
+func (h *AdminHandler) GetVersion(c *gin.Context) {
+	version := gin.H{
+		"version": VERSION,
+		"date":    DATE_VERSION,
+	}
+	c.JSON(200, version)
 }

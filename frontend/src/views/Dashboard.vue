@@ -2,8 +2,33 @@
   <div>
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">仪表板</h2>
-      <p class="page-description">Docker镜像代理系统</p>
+      <div class="header-content">
+        <div class="header-main">
+          <h2 class="page-title">仪表板</h2>
+          <p class="page-description">Docker镜像代理系统</p>
+        </div>
+        <div class="version-info" v-if="version.version">
+          <div class="project-info">
+            <div class="version-badge">
+              <span class="version-label">Beta</span>
+              <span class="version-number">{{ version.version }}</span>
+            </div>
+            <div class="github-link">
+              <el-button 
+                text 
+                size="small" 
+                title="帮忙点个星星呗"
+                @click="openGithub"
+                class="github-button"
+              >
+                <el-icon><Star /></el-icon>
+                GitHub
+              </el-button>
+            </div>
+          </div>
+          <!-- <div class="build-date">{{ formatDate(version.date) }}</div> -->
+        </div>
+      </div>
     </div>
 
     <!-- 导航卡片 -->
@@ -104,7 +129,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Connection, Key, UserFilled, Document } from '@element-plus/icons-vue'
+import { Connection, Key, UserFilled, Document, Star } from '@element-plus/icons-vue'
 import axios from 'axios'
 
 const stats = ref({
@@ -113,6 +138,23 @@ const stats = ref({
   users: 0,
   logs: 0
 })
+
+const version = ref({
+  version: '',
+  date: ''
+})
+
+const openGithub = () => {
+  window.open('https://github.com/helloxz/zmirror', '_blank')
+}
+
+const formatDate = (dateStr) => {
+  if (!dateStr || dateStr.length !== 8) return ''
+  const year = dateStr.substring(0, 4)
+  const month = dateStr.substring(4, 6)
+  const day = dateStr.substring(6, 8)
+  return `${year}-${month}-${day}`
+}
 
 const loadStats = async () => {
   try {
@@ -140,12 +182,104 @@ const loadStats = async () => {
   }
 }
 
+const loadVersion = async () => {
+  try {
+    const response = await axios.get('/api/version')
+    version.value = response.data
+  } catch (error) {
+    console.error('加载版本信息失败:', error)
+  }
+}
+
 onMounted(() => {
   loadStats()
+  loadVersion()
 })
 </script>
 
 <style scoped>
+.page-header {
+  margin-bottom: 24px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-main {
+  flex: 1;
+}
+
+.version-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.project-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.version-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+}
+
+.github-button {
+  color: white !important;
+  font-size: 12px !important;
+  padding: 6px 12px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, #24292e 0%, #4a5568 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+}
+
+.github-button:hover {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.github-button .el-icon {
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+.version-label {
+  opacity: 0.9;
+}
+
+.version-number {
+  font-weight: 600;
+}
+
+.build-date {
+  font-size: 11px;
+  color: #909399;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
 .nav-card {
   margin-bottom: 16px;
   cursor: pointer;
@@ -220,6 +354,22 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .version-info {
+    align-items: flex-start;
+  }
+  
+  .project-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
   .nav-card-content {
     flex-direction: column;
     text-align: center;

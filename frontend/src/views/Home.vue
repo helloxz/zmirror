@@ -10,7 +10,7 @@
           <h2 class="hero-subtitle">Docker镜像代理系统</h2>
           <p class="hero-description">
             一个简单易用的Docker镜像代理管理系统，支持多镜像源配置、白名单管理和访问控制。
-            帮助企业和个人更好地管理Docker镜像拉取，提高开发效率。
+            帮助企业和个人更好地管理Docker镜像拉取，提升开发效率。
           </p>
           
           <div class="hero-actions">
@@ -109,7 +109,7 @@
               <div class="step-number">2</div>
               <div class="step-content">
                 <h3>设置白名单</h3>
-                <p>配置允许访问的IP地址或用户</p>
+                <p>配置白名单镜像和添加用户</p>
               </div>
             </div>
             

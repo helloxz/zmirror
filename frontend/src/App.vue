@@ -14,6 +14,7 @@
               <el-icon><User /></el-icon>
               <span>{{ authStore.username || '管理员' }}</span>
             </div>
+            
             <el-button
               type="danger"
               size="small"
@@ -82,11 +83,17 @@ import {
   Connection, 
   Key, 
   UserFilled, 
-  Document 
+  Document,
+  Star
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
+
+// 打开 GitHub 页面
+const openGithub = () => {
+  window.open('https://github.com/helloxz/zmirror', '_blank')
+}
 
 // 退出登录
 const handleLogout = () => {
@@ -146,6 +153,20 @@ const handleLogout = () => {
   color: #606266;
 }
 
+.github-btn {
+  color: #606266 !important;
+  transition: all 0.3s ease !important;
+}
+
+.github-btn:hover {
+  color: #409eff !important;
+  background-color: rgba(64, 158, 255, 0.1) !important;
+}
+
+.github-btn .el-icon {
+  margin-right: 4px;
+}
+
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -163,6 +184,12 @@ const handleLogout = () => {
     flex-direction: column;
     gap: 12px;
     text-align: center;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
   }
   
   .main-content {

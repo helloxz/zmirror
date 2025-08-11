@@ -52,11 +52,11 @@ func LoadConfig() (*Config, error) {
 func createDefaultConfig(configPath string) error {
 	defaultConfig := `[server]
 host = "0.0.0.0"
-port = "8080"
+port = "5080"
 
 [admin]
 username = "admin"
-password = "admin123"
+password = "xiaoz.org"
 
 [database]
 path = "./data/registry.db"
